@@ -7,18 +7,24 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4 # Toleo jipya
+
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # Toleo jipya
         with:
           python-version: '3.11'
+
       - name: Install Dependencies
-        run: pip install pyinstaller setuptools pywin32
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller setuptools pywin32
+
       - name: Build EXE
+        # Nimetumia 'icon.ico' ndogo kama inavyoonekana kwenye folder lako
         run: pyinstaller --noconsole --onefile --uac-admin --icon=icon.ico ZTEADB.PY
+
       - name: Upload EXE
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # Hapa ndipo palipokuwa na kosa la v3
         with:
           name: BlackManV2_Tool
           path: dist/ZTEADB.exe
-          
